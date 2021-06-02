@@ -1,0 +1,156 @@
+---
+
+# .. envvar:: update_raspi_config [[[
+#
+# Update the Raspberry Pi config utility
+update_raspi_config: true
+# ]]]
+
+# .. envvar:: update_hostname [[[
+#
+# Update hostname on Raspberry Pi
+update_hostname: true
+# ]]]
+
+# .. envvar:: netnames [[[
+#
+# Update the netnames on Raspberry Pi
+netnames: false
+# ]]]
+
+# .. envvar:: set_boot_behaviour [[[
+#
+# Enable/Disable the update for boot behavior
+# This option is working from Raspberry Pi 3 and above
+set_boot_behaviour: false
+# ]]]
+
+# .. envvar:: boot_behavior [[[
+#
+# Update the boot behavior for current deploy
+boot_behavior: "B1" #B1 cli, B2 cli autologin, B3 desktop, B4 desktop autologin
+# ]]]
+
+# .. envvar:: set_boot_wait [[[
+#
+# Enable/Disable the boot wait for using the network boot
+# This option is working from Raspberry Pi 3 and above
+set_boot_wait: false
+# ]]]
+
+# .. envvar:: set_boot_splash [[[
+#
+# Enable/Disable the boot splash
+# This option is working from Raspberry Pi 3 and above
+set_boot_splash: false
+# ]]]
+
+# .. envvar:: host_locales [[[
+#
+# Setup the host locales
+host_locales: en_US.UTF-8 UTF-8
+# ]]]
+
+# .. envvar:: host_timezone [[[
+#
+# Setup the host timezone
+host_timezone: UTC
+# ]]]
+
+# .. envvar:: host_xkblayout [[[
+#
+# Setup the host keyboard layout
+host_xkblayout: "us" #default "gb"
+# ]]]
+
+# .. envvar:: set_wifi_country [[[
+#
+# Enable/Disable the change for WIFI Country
+set_wifi_country: false
+# ]]]
+
+# .. envvar:: host_wifi_country [[[
+#
+# Setup the host wifi country
+host_wifi_country: ro
+# ]]]
+
+# .. envvar:: set_camera [[[
+#
+# Enable/Disable the camera port on Raspberry pi
+set_camera: false
+# ]]]
+
+# .. envvar:: set_vnc [[[
+#
+# Enable/Disable the VNC (Virtual Network Computing) on Raspberry pi
+set_vnc: false
+# ]]]
+
+# .. envvar:: set_spi [[[
+#
+# Enable/Disable the SPI interface
+set_spi: false
+# ]]]
+
+# .. envvar:: set_i2c [[[
+#
+# Enable/Disable the I2C interface
+set_i2c: false
+# ]]]
+
+# .. envvar:: set_serial [[[
+#
+# Enable/Disable the serial interface
+set_serial: false
+# ]]]
+
+# .. envvar:: set_hw_serial [[[
+#
+# Enable/Disable the serial hardware interface
+set_hw_serial: true
+# ]]]
+
+# .. envvar:: set_onewire [[[
+#
+# Enable/Disable the OneWire interface
+set_onewire: false
+# ]]]
+
+# .. envvar:: set_remote_gpio [[[
+#
+# Enable/Disable the Remote GPIO interface
+set_remote_gpio: false
+# ]]]
+
+# .. envvar:: set_overclock [[[
+#
+# Set the overclock feature on Raspberry Pi
+# options available: None|Modest|Medium|High|Turbo
+overclock_type: None
+# ]]]
+
+# .. envvar:: set_expand_fs [[[
+#
+# Expandable the filesystem if is available
+set_expand_fs: true
+# ]]]
+
+# .. envvar:: set_overscan [[[
+#
+# Enable/Disable the Overscan
+set_overscan: true
+# ]]]
+
+# .. envvar:: set_overclock [[[
+#
+# Set the overclock feature on Raspberry Pi
+# options available: 16|32|64|128|256
+host_memory_split: 16
+# ]]]
+
+# .. envvar:: set_overscan [[[
+#
+# Enable/Disable the Pixel Doubling
+set_pixel_doubling: false
+# ]]]

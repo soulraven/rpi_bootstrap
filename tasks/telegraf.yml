@@ -1,0 +1,44 @@
+---
+
+- name: Add TICK repository key
+  apt_key:
+    url: "{{ tick_apt_key_url }}"
+    state: present
+
+- name: Add TICK repository into source list
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/debian {{ ansible_lsb.codename|lower }} stable"
+    state: present
+    filename: influxdb
+
+- name: Install TICK packages
+  apt:
+    name: "{{ tick_apt_packages }}"
+    state: latest
+    update_cache: yes
+
+- name: Adding user to sudoers
+  template:
+    src: telegraf/sudo_user.j2
+    dest: /etc/sudoers.d/010_telegraf-nopassword
+    mode: '0440'
+    validate: 'visudo -cf %s'
+
+- name: Install the Telegraf config file
+  template:
+    src: telegraf/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+
+- name: Install the Raspberry PI stat bash script
+  copy:
+    src: telegraf/rpi-stats.sh
+    dest: /usr/local/bin/rpi-stats.sh
+    owner: telegraf
+    group: telegraf
+    mode: 'a+x'
+
+- name: Add user "video" to telegraf group
+  user:
+    name: telegraf
+    groups: video
+    append: yes

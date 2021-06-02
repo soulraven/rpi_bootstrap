@@ -1,0 +1,28 @@
+---
+
+- name: Add IzzySoft CPG key repository
+  apt_key:
+    url: "{{ izzy_soft_cpg_key_url }}"
+    state: present
+
+- name: Add Monitorix IzzySoft Apt Repository
+  apt_repository:
+    repo: "{{ izzy_soft_apt_repository }}"
+    state: present
+
+- name: Install Monitorix latesc version from repository
+  apt:
+    name: monitorix
+    state: latest
+
+- name: "Create Monitorix config"
+  template:
+    src: etc/monitorix/monitorix.conf.j2
+    dest: "{{ monitorix_conf }}"
+    owner: root
+    group: root
+    mode: 0644
+  become_user: root
+  become: true
+  register: register_monitorix_config
+  notify: "Restart Monitorix"

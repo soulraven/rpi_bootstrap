@@ -1,0 +1,44 @@
+---
+
+# .. envvar:: i2c_rtc_enable [[[
+#
+# Enable/Disable the i2c RTC module
+# this is done with loading or unload the specific module to kernel
+i2c_rtc_enable: false
+# ]]]
+
+# .. envvar:: i2c_rtc_dtoverlay [[[
+#
+# what type of i2c rtc module is loaded
+# default: ds1307 options: ds1307|pcf8523|ds3231
+i2c_rtc_dtoverlay: ds1307
+# ]]]
+
+# .. envvar:: i2c_serial_hat_addr [[[
+# 
+# # this is a Serial Expansion HAT using sc16is752 chip
+# setup the default address for sc16is752
+# default: 0x48
+i2c_serial_hat_addr: '0x48'
+# ]]]
+
+# .. envvar:: i2c_seral_hat_enable [[[
+#
+# Enable/Disable the serial HAT
+# this is done with loading or unload the specific module to kernel
+i2c_seral_hat_enable: false
+# ]]]
+
+# .. envvar:: i2c_serial_hat_intr [[[
+# 
+# this is a Serial Expansion HAT using sc16is752 chip
+# setup the default interruption pin for sc16is752
+# default: 24
+i2c_serial_hat_intr: 24
+# ]]]
+
+# .. envvar:: i2c_serial_hat_port [[[
+# 
+# default serial console from serial HAT
+i2c_serial_hat_port: ttySC0
+# ]]]

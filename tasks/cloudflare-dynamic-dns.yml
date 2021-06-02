@@ -1,0 +1,62 @@
+---
+
+- name: Create Cloudflare system user
+  user:
+    user: cfddns
+    groups: cfddns
+    comment: Cloudflare Dynamic DNS daemon
+    shell: /bin/bash
+    system: yes
+    create_home: no
+    state: present
+
+- name: Install PIP packages
+  pip:
+    name: "{{ q('flattened', (cfddns__base_packages + cfddns__extra_packages)) }}"
+    state: present
+
+- name: Clone the Cloudflare Dynamic DNS repository
+  git:
+    repo: "{{ cfddns_git_url }}"
+    dest: "{{ cfddns_repository_destination }}"
+    clone: yes
+
+- name: Change permissions for repository
+  file:
+    path: "{{ cfddns_repository_destination }}"
+    owner: cfddns
+    group: cfddns
+    recurse: yes
+
+- name: Deploy PIP requirements.txt
+  pip:
+    requirements: "{{ cfddns_repository_destination }}/requirements.txt"
+    chdir: "{{ cfddns_repository_destination }}"
+    state: present
+
+- name: Deploy the template for settings.py file
+  template:
+    src: cf_ddns/settings.py.j2
+    dest: "{{ cfddns_repository_destination }}/cloudflare_ddns/settings.py"
+    owner: cfddns
+    group: cfddns
+
+- name: Create log folder if not exists already
+  file:
+    path: "{{ cfddns_repository_destination }}/log"
+    owner: cfddns
+    group: cfddns
+    state: directory
+
+- name: Deploy the systemd for Cloudflare Dynamic DNS
+  file:
+    src: "{{ cfddns_repository_destination }}/cfddns.service"
+    dest: /lib/systemd/system/cfddns.service
+    state: link
+
+- name: Reload the systemd for cfddns daemon
+  systemd:
+    name: cfddns
+    daemon_reload: yes
+    enabled: yes
+    state: restarted

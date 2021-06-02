@@ -1,0 +1,154 @@
+---
+
+- name: Change hostname
+  shell: "raspi-config nonint do_hostname {{ hostname }}"
+  when: update_hostname|bool and pi_hostname.stdout != hostname
+
+- name: Enable network names
+  shell: "raspi-config nonint do_net_names 0"
+  when: netnames|bool and (pi_netnames.stdout != '0')
+
+- name: Disable network names
+  shell: "raspi-config nonint do_net_names 1"
+  when: not netnames|bool and (pi_netnames.stdout != '1')
+
+- name: Set Boot behaviour
+  shell: "raspi-config nonint do_boot_behaviour {{ boot_behavior }}"
+  when: set_boot_behaviour
+
+- name: Enable boot wait network status
+  shell: "raspi-config nonint do_boot_wait 0"
+  when: set_boot_wait|bool and (boot_wait != '0')
+
+- name: Disable boot wait network status
+  shell: "raspi-config nonint do_boot_wait 1"
+  when: not set_boot_wait|bool and (boot_wait != '1')
+
+- name: Enable boot wait network status
+  shell: "raspi-config nonint do_boot_splash 0"
+  when: set_boot_splash|bool and (boot_splash != '0')
+  ignore_errors: yes
+
+- name: Disable boot wait network status
+  shell: "raspi-config nonint do_boot_splash 1"
+  when: not set_boot_splash|bool and (boot_splash != '1')
+  ignore_errors: yes
+
+#4 Localization Options
+
+- name: Change locale
+  shell: "raspi-config nonint do_change_locale {{ host_locales }}"
+
+- name: Change timezone
+  shell: "raspi-config nonint do_change_timezone {{ host_timezone }}"
+
+- name: Change keyboard layout
+  shell: "raspi-config nonint do_configure_keyboard {{ host_xkblayout }}"
+
+- name: Set WiFi country
+  shell: "raspi-config nonint do_wifi_country {{ host_wifi_country }}"
+  when: set_wifi_country|bool and (wifi_country != host_wifi_country)
+  ignore_errors: yes
+
+#5 Interfacing Options
+
+#P1 CAMERA
+- name: Enable Camera
+  shell: "raspi-config nonint do_camera 0"
+  when: set_camera|bool and (camera_status.stdout != '0')
+
+- name: Disable Camera
+  shell: "raspi-config nonint do_camera 1"
+  when: not set_camera|bool and (camera_status.stdout != '1')
+
+- name: Enable VNC
+  shell: "raspi-config nonint do_vnc 0"
+  when: set_vnc|bool and (vnc_status.stdout != '0')
+
+- name: Disable VNC
+  shell: "raspi-config nonint do_vnc 1"
+  when: not set_vnc|bool and (vnc_status.stdout != '1')
+
+- name: Enable SPI
+  shell: "raspi-config nonint do_spi 0"
+  when: set_spi|bool and (spi_status.stdout != '0')
+
+- name: Disable SPI
+  shell: "raspi-config nonint do_spi 1"
+  when: not set_spi|bool and (spi_status.stdout != '1')
+
+- name: Enable I2C
+  shell: "raspi-config nonint do_i2c 0"
+  when: set_i2c|bool and (i2c_status.stdout != '0')
+
+- name: Disable I2C
+  shell: "raspi-config nonint do_i2c 1"
+  when: not set_i2c|bool and (i2c_status.stdout != '1')
+
+- name: Enable serial console
+  shell: "raspi-config nonint do_serial 0"
+  when: set_serial|bool and (serial_status.stdout != '0')
+
+- name: Disable serial console
+  shell: "raspi-config nonint do_serial 1"
+  when: not set_serial|bool and (serial_status.stdout != '1')
+
+- name: Enable hardware serial
+  shell: "raspi-config nonint set_config_var enable_uart 1 /boot/config.txt"
+  when: set_hw_serial|bool
+
+- name: Disable hardware serial
+  shell: "raspi-config nonint set_config_var enable_uart 0 /boot/config.txt"
+  when: not set_hw_serial|bool
+
+- name: Enable OneWire
+  shell: "raspi-config nonint do_onewire 0"
+  when: set_onewire|bool and (onewire_status.stdout != '0')
+
+- name: Disable OneWire
+  shell: "raspi-config nonint do_onewire 1"
+  when: not set_onewire|bool and (onewire_status.stdout != '1')
+
+- name: Enable Remote GPIO
+  shell: "raspi-config nonint do_rgpio 0"
+  when: set_remote_gpio|bool and (rgpio_status.stdout != '0')
+
+- name: Disable Remote GPIO
+  shell: "raspi-config nonint do_rgpio 1"
+  when: not set_remote_gpio|bool and (rgpio_status.stdout != '1')
+
+#6 Overclock
+
+- name: Enable Overclock
+  shell: "raspi-config nonint do_overclock {{ overclock_type }}"
+  when: overclock_type != 'None'
+
+- name: Disable Overclock
+  shell: "raspi-config nonint do_overclock None"
+  when: overclock_type == 'None'
+
+#7 Advanced Options 
+
+- name: Expand Filesystem
+  shell: "raspi-config nonint do_expand_rootfs"
+  when: set_expand_fs|bool and fs_filled.stdout == '0'
+
+- name: Enable Overscan
+  shell: "raspi-config nonint do_overscan 0"
+  when: set_overscan|bool and (pi_overscan.stdout != '0')
+
+- name: Disable Overscan
+  shell: "raspi-config nonint do_overscan 1"
+  when: not set_overscan|bool and (pi_overscan.stdout != '1')
+
+- name: Set GPU memory split
+  shell: "raspi-config nonint do_memory_split {{ host_memory_split }}"
+  when: gpu_mem.stdout != host_memory_split
+
+- name: Enable pixel doubling
+  shell: "raspi-config nonint do_pixdub 0"
+  when: set_pixel_doubling and (pixdub_status.stdout != '0')
+
+- name: Disable pixel doubling
+  shell: "raspi-config nonint do_onewire 1"
+  when: not set_pixel_doubling|bool and (pixdub_status.stdout != '1')

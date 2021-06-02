@@ -1,0 +1,75 @@
+---
+
+- name: Python RAW
+  include: init.yml
+  tags:
+    - Python
+    - raw
+
+- name: Config the Raspberry Pi using "raspi-config" utility tool
+  include: raspi-config.yml
+  tags:
+    - raspi-config
+    - tool
+    - utility
+    - noninteractive
+
+- name: Update OS packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install OS packages
+  package:
+    name: "{{ q('flattened', (init__base_packages
+                              + init__extra_packages)) }}"
+    state: latest
+  register: init__os_packages
+  until: init__os_packages is succeeded
+
+- name: Setup the i2c RTC clock if is pressend and option enabled
+  include: rtc-init.yml
+  tags:
+    - rtc
+    - i2c
+    - ds1307
+    - '0x68'
+
+- name: Setup the I2C-bus/SPI serial Shield using SC16IS752
+  include: serial_shield_init.yml
+  tags:
+    - i2c
+    - spi
+    - SC16IS752
+    - serial
+    - shield
+
+- name: Enable the statistics with Telegraf
+  include: telegraf.yml
+  tags:
+    - telegraf
+    - graphs
+    - statistics
+
+- name: Cloudflare Dynamic DNS
+  include: cloudflare-dynamic-dns.yml
+  tags:
+    - cloudflare
+    - dynamic
+    - dns
+
+# - name: Install Monitorix a lightweight system monitoring tool
+#   include: monitorix.yml
+#   tags:
+#     - monitorix
+#     - monitoring
+#     - tool
+
+- name: Reboot
+  become: True
+  shell: "sleep 1 && shutdown -r now +1"
+  async: 1
+  poll: 0
+  notify:
+    - wait-for-reboot
+  when: reboot_after_config|bool

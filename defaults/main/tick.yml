@@ -1,0 +1,32 @@
+---
+
+# .. envvar:: tick_apt_key_url [[[
+# URL for the TICK suite
+# default used for Telegraf
+tick_apt_key_url: https://repos.influxdata.com/influxdb.key
+# ]]]
+
+# .. envvar:: tick_apt_packages [[[
+#
+# TICK repository packages
+tick_apt_packages:
+  - telegraf
+# ]]]
+
+# .. envvar:: tick_telegraf_default_user [[[
+# 
+# Default user for telegraf
+tick_telegraf_default_user: telegraf
+# ]]]
+
+# .. envvar:: tick_influxdb_host [[[
+# 
+# Default address host for InfluxDB
+tick_influxdb_host: 'localhost'
+# ]]]
+
+# .. envvar:: tick_influxdb_port [[[
+# 
+# Default address port for InfluxDB
+tick_influxdb_port: 8086
+# ]]]

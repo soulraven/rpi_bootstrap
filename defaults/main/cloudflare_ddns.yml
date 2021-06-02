@@ -1,0 +1,80 @@
+---
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
+
+# .. Copyright (C) 2021 Constantin Zaharia <constantin.zaharia@progeek.ro>
+# .. Copyright (C) 2021 ProGeek <https://progeek.ro/>
+# .. SPDX-License-Identifier: GPL-3.0-only
+
+
+# General configuration [[[
+# -------------------------
+
+# .. envvar:: cfddns__base_packages [[[
+# Base pip packages to be installed on this task
+cfddns__base_packages:
+  - requests
+  - ipaddress
+# ]]]
+
+# .. envvar:: cfddns__extra_packages [[[
+# Extra packages to install on this task
+cfddns__extra_packages: []
+# ]]]
+
+# .. envvar:: cfddns_git_url [[[
+# Github repository URL
+cfddns_git_url: 'https://github.com/soulraven/cloudflare_ddns'
+# ]]]
+
+# .. envvar:: cfddns_repository_destination [[[
+# 
+cfddns_repository_destination: '/opt/cloudflare_ddns'
+# ]]]
+
+# .. envvar:: cfddns_settings_debug [[[
+# 
+cfddns_settings_debug: False
+# ]]]
+
+# .. envvar:: cfddns_settings_subdomains [[[
+# 
+cfddns_settings_subdomains: []
+# ]]]
+
+# .. envvar:: cfddns_settings_auth_type [[[
+# Permitted and used token or key
+cfddns_settings_auth_type: 'token'
+# ]]]
+
+# .. envvar:: cfddns_settings_api_token [[[
+# API Tokens provide a new way to authenticate with the Cloudflare API.
+# They allow for scoped and permissions access to resources and use the RFC compliant Authorization Bearer Token Header
+cfddns_settings_api_token: ''
+# ]]]
+
+# .. envvar:: cfddns_settings_api_key [[[
+# API key generated on the "My Account" page
+cfddns_settings_api_key: ''
+# ]]]
+
+# .. envvar:: cfddns_settings_email [[[
+# Email address associated with your account
+cfddns_settings_email: ''
+# ]]]
+
+# .. envvar:: cfddns_settings_ttl [[[
+# 
+cfddns_settings_ttl: 300
+# ]]]
+
+# .. envvar:: cfddns_settings_proxied [[[
+# 
+cfddns_settings_proxied: False
+# ]]]
+
+# .. envvar:: cfddns_settings_delay_tasks [[[
+# Delay tasks in seconds. Default value is 60 minutes
+cfddns_settings_delay_tasks: 60 * 60
+# ]]]
+
+# ]]]

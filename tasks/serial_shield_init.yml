@@ -1,0 +1,28 @@
+---
+
+- name: Load the i2c sc16is752 module to kernel
+  blockinfile:
+    path: /boot/config.txt
+    marker: "# {mark} ANSIBLE insert for i2c/spi serial expansion HAT"
+    block: |
+      dtoverlay=sc16is752-i2c,int_pin={{ i2c_serial_hat_intr }},addr={{ i2c_serial_hat_addr }}
+    state: present
+  when: i2c_seral_hat_enable|bool
+
+- name: Un-Load the i2c sc16is752 module to kernel
+  blockinfile:
+    path: /boot/config.txt
+    marker: "# {mark} ANSIBLE insert for i2c/spi serial expansion HAT"
+    block: |
+      dtoverlay=sc16is752-i2c,int_pin={{ i2c_serial_hat_intr }},addr={{ i2c_serial_hat_addr }}
+    state: absent
+  when: not i2c_seral_hat_enable|bool
+
+- name: Replace default system serial console
+  replace:
+    path: /boot/cmdline.txt
+    regexp: "{{ item }}"
+    replace: 'console={{ i2c_serial_hat_port }}'
+  with_items:
+    - "^(console=serial[0-9])"
+  when: i2c_seral_hat_enable|bool

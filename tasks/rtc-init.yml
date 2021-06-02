@@ -1,0 +1,51 @@
+---
+
+- name: Remove the fake-hwclock package
+  apt:
+    name: "{{ default_apt_packages_removed }}"
+    state: absent
+
+- name: Remove fake-hwclock from update-rc.d
+  shell: "update-rc.d -f fake-hwclock remove"
+
+- name: Remove fake-hwclock from services
+  service:
+    name: fake-hwclock
+    enabled: no
+
+- name: Fix with comments the hwclock function
+  replace:
+    path: /lib/udev/hwclock-set
+    regexp: "{{ item }}"
+    replace: '\1'
+  with_items:
+    - "^#(.*\/run\/systemd\/system.*)$"
+    - "^#(.*exit 0.*)$"
+    - "^#(.*fi.*)$"
+  
+- name: Comment the wrong pices on hwclock
+  replace:
+    path: /lib/udev/hwclock-set
+    regexp: "{{ item }}"
+    replace: '# \1'
+  with_items:
+    - "^(?!#.*)(^.*--rtc=\\$dev --systz --badyear)$"
+    - "^(?!#.*)(^.*/sbin/hwclock --rtc=\\$dev --systz)$"
+
+- name: Load the RTC module to kernel
+  blockinfile:
+    path: /boot/config.txt
+    marker: "# {mark} ANSIBLE insert for i2c rtc clock module"
+    block: |
+      dtoverlay=i2c-rtc,{{ i2c_rtc_dtoverlay }}
+    state: present
+  when: i2c_rtc_enable|bool
+
+- name: Un-Load the RTC module to kernel
+  blockinfile:
+    path: /boot/config.txt
+    marker: "# {mark} ANSIBLE insert for i2c rtc clock module"
+    block: |
+      dtoverlay=i2c-rtc,{{ i2c_rtc_dtoverlay }}
+    state: absent
+  when: not i2c_rtc_enable|bool

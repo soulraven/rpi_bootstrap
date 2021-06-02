@@ -1,0 +1,261 @@
+---
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
+
+# .. Copyright (C) 2021 Constantin Zaharia <constantin.zaharia@progeek.ro>
+# .. Copyright (C) 2021 ProGeek <https://progeek.ro/>
+# .. SPDX-License-Identifier: GPL-3.0-only
+
+
+# General configuration [[[
+# -------------------------
+
+# .. envvar:: izzy_soft_apt_repository [[[
+izzy_soft_apt_repository: "deb https://apt.izzysoft.de/ubuntu generic universe"
+# ]]]
+
+# .. envvar:: izzy_soft_cpg_key_url [[[
+izzy_soft_cpg_key_url: "https://apt.izzysoft.de/izzysoft.asc"
+# ]]]
+
+# .. envvar:: monitorix__base_packages [[[
+monitorix__base_packages:
+  - perl
+  - rrdtool
+  - libwww-perl
+  - libmailtools-perl
+  - libmime-lite-perl
+  - librrds-perl
+  - libdbi-perl
+  - libxml-simple-perl
+  - libhttp-server-simple-perl
+  - libconfig-general-perl
+  - libio-socket-ssl-perl
+# ]]]
+
+# .. envvar:: monitorix_port [[[
+monitorix_port: "8081"
+# ]]]
+
+# .. envvar:: monitorix_conf [[[
+monitorix_conf: /etc/monitorix/monitorix.conf
+# ]]]
+
+# .. envvar:: monitorix_conf [[[
+# A free description of the server; where it is located, the Company name, etc.
+# Default value: Place a Title Here
+monitorix_settings_window_title: ''
+# ]]]
+
+# .. envvar:: monitorix_settings_hostname [[[
+# The name of the host.
+# Default value:
+monitorix_settings_hostname: ''
+# ]]]
+
+# .. envvar:: monitorix_settings_theme_color [[[
+# RRDtool comes with a default white theme,
+# and since Monitorix introduces its own black theme, you have two predefined themes to choose from.
+# Default value: white
+monitorix_settings_theme_color: white
+# ]]]
+
+# .. envvar:: monitorix_settings_refresh_rate [[[
+# The refresh rate (in seconds) of the statistics web page displayed in your browser.
+# If set to 0, page refreshing is disabled.
+# Default value: 150
+monitorix_settings_refresh_rate: 150
+# ]]]
+
+# .. envvar:: monitorix_settings_iface_mode [[[
+# The interface mode defines the manner in which data is shown in the browser.
+# Since version 1.4.0 it has been possible to display the graphic data using plain text tables.
+# This allows Monitorix to be used by those running screen reader software,
+# and also simplifies automatic data processing through scripts.
+# The possible values are:
+#   graph for rendered graphs.
+#   text for plain text representation.
+# Default value: graph
+monitorix_settings_iface_mode: graph
+# ]]]
+
+# .. envvar:: monitorix_settings_enable_zoom [[[
+# Zoom allows double clicking any graph in order to see a larger version (zoomed in).
+# This is especially useful for seeing additional detail.
+# Default value: y
+monitorix_settings_enable_zoom: y
+# ]]]
+
+# .. envvar:: monitorix_settings_netstats_in_bps [[[
+# This option toggles network values between bits (bps) and Bytes (Bps) per second.
+# By default the values will be shown in Bytes per second (Bps).
+# Default value: n
+monitorix_settings_netstats_in_bps: n
+# ]]]
+
+# .. envvar:: monitorix_settings_netstats_mode [[[
+# This option toggles network visualization mode between overlapped
+# (input and output values appear one in front the other) and separated 
+# (input values appear on top and output values below, in negative).
+# Default value: overlapped
+monitorix_settings_netstats_mode: overlapped
+# ]]]
+
+# .. envvar:: monitorix_settings_disable_javascript_void [[[
+# This option enables or disables the use of javascript:void-URLs when opening windows with zoomed graphs.
+# Some people likes to open links in the background by pressing the middle mouse button in Firefox,
+# and with the default javascript:void-URLs the only they get is an empty window with nothing in it.
+# Default value: n
+monitorix_settings_disable_javascript_void: n
+# ]]]
+
+# .. envvar:: monitorix_settings_temperature_scale [[[
+# This option toggles between values in Celsius or in Fahrenheit
+# in those graphs that represent temperatures.
+# The possible values are:
+#   c for Celsius.
+#   f for Fahrenheit.
+# Default value: c
+monitorix_settings_temperature_scale: c
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_builtin_enabled [[[
+# This enables or disables the HTTP server that Monitorix has built-in.
+# This is specially useful for system administrators that don’t want to install a web server
+# (Apache, Lighttpd, Nginx, etc.) to see the Monitorix graphs.
+# Default value: y
+monitorix_settings_httpd_builtin_enabled: y
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_builtin_host [[[
+# This option takes an optional host address for this server to bind to.
+# If none is specified (default) it will bind to all interfaces.
+# Default value:
+monitorix_settings_httpd_builtin_host: "{{ ansible_default_ipv4.address }}"
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_builtin_port [[[
+# This is the network port from where the HTTP server will listen on.
+# Default value: 8080
+monitorix_settings_httpd_builtin_port: 8080
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_hosts_deny [[[
+# This is a comma delimited set of IP addresses which are not permitted to access
+# Monitorix graphs. There is the special keyword called all that can be used
+# to deny all IP addresses.
+# The access control uses the same approach as in the TCP-Wrappers; the search stops at the first match:
+#   - Access will be granted when an IP address matches an entry in the hosts_allow list.
+#   - Otherwise, access will be denied when an IP address matches an entry in the hosts_deny list.
+#   - Otherwise, access will be granted.
+# Default value:
+monitorix_settings_httpd_hosts_deny: 
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_hosts_allow [[[
+# This is the opposite of hosts_deny option.
+# IP addresses listed here are permitted to access Monitorix graphs.
+# There is also the special keyword called all that can be used to allow access to
+# all IP addresses.
+# Default value:
+monitorix_settings_httpd_hosts_allow: 
+# ]]]
+
+# .. envvar:: monitorix_settings_httpd_https_url [[[
+# This will force to use the prefix https:// in all links.
+# This is special useful if you plan to use a reverse-proxy HTTPS server in
+# front of the Monitorix HTTP built-in server.
+# Default value: n
+monitorix_settings_httpd_https_url: n
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__chrony [[[
+monitorix_settings_graph_enable__chrony: y
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__raspberrypi [[[
+monitorix_settings_graph_enable__raspberrypi: y
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__port [[[
+monitorix_settings_graph_enable__port: n
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__process [[[
+monitorix_settings_graph_enable__process: n
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__netstat [[[
+monitorix_settings_graph_enable__netstat: n
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__net [[[
+monitorix_settings_graph_enable__net: n
+# ]]]
+
+# .. envvar:: monitorix_settings_graph_enable__system [[[
+monitorix_settings_graph_enable__system: n
+# ]]]
+
+# .. envvar:: monitorix_settings_process_list [[[
+# This is a list of groups of processes that you want to monitor.
+# Each group will become a graph and there may be an unlimited number of groups.
+monitorix_settings_process_list:
+  - 0 = chronyd
+# ]]]
+
+# .. envvar:: monitorix_settings_process_desc [[[
+# This list complements the list option.
+# It basically allows you to change the name that will appear in the graph,
+# hiding the real name of the process. If no association is defined,
+# then Monitorix will display the name specified in the list option.
+#   <desc>
+#        httpd = Apache
+#        imap = Dovecot
+#        named = Bind
+#   </desc>
+# You can define as much entries as you want.
+monitorix_settings_process_desc:
+  - chronyd = Chrony
+# ]]]
+
+# .. envvar:: monitorix_settings_net_list [[[
+# This is a comma-separated list of network interfaces that you may want to monitor.
+# An example would be:
+#   list = eth0, eth1
+monitorix_settings_net_list:
+  - eth0
+# ]]]
+
+# .. envvar:: monitorix_settings_net_desc [[[
+# This is a comma-separated list of network interfaces that you may want to monitor.
+# An example would be:
+#   list = eth0, eth1
+monitorix_settings_net_desc:
+  - eth0 = FastEthernet LAN, 0, 10000000
+# ]]]
+
+# .. envvar:: monitorix_settings_raspberrypi_clocks [[[
+# Raspberry Pi sensor statistics (raspberrypi.pm)
+# This is a comma-separated list of clock types that will be represented in the first graph.
+# An example would be:
+#   clocks = arm, core, h264, isp, v3d, uart, emmc, pixel, hdmi
+# The maximum number of clocks allowed is 9.
+monitorix_settings_raspberrypi_clocks:
+  - arm
+  - core
+# ]]]
+
+# .. envvar:: monitorix_settings_raspberrypi_volts [[[
+# Raspberry Pi sensor statistics (raspberrypi.pm)
+# This is a comma-separated list of voltage types that will be represented in the third graph.
+# An example would be:
+#   volts = core, sdram_c, sdram_i, sdram_p
+# The maximum number of clocks allowed is 6.
+monitorix_settings_raspberrypi_volts:
+  - core
+  - sdram_c
+  - sdram_i
+  - sdram_p
+# ]]]
+
+# ]]]

@@ -1,0 +1,41 @@
+---
+# .. vim: foldmarker=[[[,]]]:foldmethod=marker
+
+# .. Copyright (C) 2021 Constantin Zaharia <constantin.zaharia@progeek.ro>
+# .. Copyright (C) 2021 ProGeek <https://progeek.ro/>
+# .. SPDX-License-Identifier: GPL-3.0-only
+
+
+# General configuration [[[
+# -------------------------
+
+# .. envvar:: init__base_packages [[[
+init__base_packages:
+  - apt-transport-https
+  - python-smbus
+  - python-dev
+  - python3-dev
+  - python-spidev
+  - python3-spidev
+  - python3-distutils-extra
+  - python-rpi.gpio
+  - i2c-tools
+  - screenfetch
+# ]]]
+
+# .. envvar:: init_extra_packages [[[
+# Extra packages to install on deploy
+init__extra_packages: []
+# ]]]
+
+default_apt_packages_removed:
+  - fake-hwclock
+
+# .. envvar:: reboot_after_config [[[
+#
+# Reboot the Raspberry Pi after config
+reboot_after_config: true
+# ]]]
+
+
+# ]]]
