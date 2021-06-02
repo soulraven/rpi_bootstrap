@@ -1,0 +1,8 @@
+*.retry
+*.log
+.DS_Store
+*.py[co]
+secret
+pass-vault.txt
+*.code-workspace
+ansible/secret

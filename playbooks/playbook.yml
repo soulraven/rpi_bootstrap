@@ -1,0 +1,21 @@
+---
+
+# This playbook can be used to bootstrap freshly installed Raspberry Pi's
+
+- name: Boootstrap Raspberry Pi
+  hosts: [ 'debops_all_raspberry_pi' ]
+  environment: '{{ inventory__environment | d({})
+                   | combine(inventory__group_environment | d({}))
+                   | combine(inventory__host_environment  | d({})) }}'
+  remote_user: pi
+  become: True
+  gather_facts: True
+
+  pre_tasks:
+    - name: Gatter data from Rapsberry Pi config utility
+      include: ../tasks/pre-task.yml
+
+  roles:
+    
+    - role: rpi_bootstrap
+      tags: [ 'role::rpi_bootstrap', 'skip::rpi_bootstrap']
