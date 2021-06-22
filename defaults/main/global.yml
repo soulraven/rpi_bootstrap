@@ -21,6 +21,8 @@ init__base_packages:
   - python-rpi.gpio
   - i2c-tools
   - screenfetch
+  - cpufrequtils
+  - neofetch
 # ]]]
 
 # .. envvar:: init_extra_packages [[[

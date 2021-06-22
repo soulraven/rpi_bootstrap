@@ -1,0 +1,33 @@
+---
+
+- name: Clone the Shell Tweaks from github
+  git:
+    repo: "{{ shell_tweaks_git_url }}"
+    dest: "{{ shell_tweaks_repository_destination }}"
+    clone: yes
+    force: yes
+  when: shell_tweaks_state|bool
+
+- name: Set the permissions for install.sh file
+  file:
+    path: "{{ shell_tweaks_repository_destination }}/install.sh"
+    owner: root
+    group: root
+    mode: a+x
+  when: shell_tweaks_state|bool
+
+- name: Run the install script
+  shell:
+    cmd: ./install.sh reinstall
+    chdir: "{{ shell_tweaks_repository_destination }}"
+  args:
+    executable: /bin/bash
+  when: shell_tweaks_state|bool
+
+- name: Run the uninstall script
+  shell:
+    cmd: ./install.sh uninstall
+    chdir: "{{ shell_tweaks_repository_destination }}"
+  args:
+    executable: /bin/bash
+  when: not shell_tweaks_state|bool

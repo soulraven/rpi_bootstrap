@@ -58,6 +58,14 @@
     - dynamic
     - dns
 
+- name: Shell Tweaks
+  include: shell_tweaks.yml
+  tags:
+    - shell
+    - tweaks
+    - easy
+    - access
+
 # - name: Install Monitorix a lightweight system monitoring tool
 #   include: monitorix.yml
 #   tags:
