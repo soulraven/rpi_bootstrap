@@ -12,15 +12,16 @@
 # .. envvar:: init__base_packages [[[
 init__base_packages:
   - apt-transport-https
-  - python-smbus
-  - python-dev
+  - python3-pip
+  - python3-smbus
   - python3-dev
-  - python-spidev
+  - python3-dev
   - python3-spidev
   - python3-distutils-extra
-  - python-rpi.gpio
+  - python3-rpi.gpio
   - i2c-tools
   - cpufrequtils
+  - git
 # ]]]
 
 # .. envvar:: init_extra_packages [[[

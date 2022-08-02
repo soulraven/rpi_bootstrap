@@ -1,5 +1,11 @@
 ---
 
+- name: Crate Cloudflare system group
+  group:
+    name: cfddns
+    state: present
+    system: yes
+
 - name: Create Cloudflare system user
   user:
     user: cfddns
